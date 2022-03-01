@@ -25,7 +25,7 @@ class State(db.Model):
 class Municipality(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
-    state_id = db.Column(db.Integer, db.ForeignKey('state.id'),nullable=False)
+    state_id = db.Column(db.Integer, db.ForeignKey('state.id'), nullable=False)
 
     def __init__(self, name):
         self.name = name
