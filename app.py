@@ -48,6 +48,23 @@ class Colony(db.Model):
 db.create_all()
 
 
+class StateSchema(ma.Schema):
+    class Meta:
+        fields = "name"
+
+
+class MunicipalitySchema(ma.Schema):
+    class Meta:
+        fields = "name"
+
+
+class ColonySchema(ma.Schema):
+    class Meta:
+        fields = ("postalcode", "name_colony", "type_colony", "type_zone")
+
+
+
+
 @app.route('/')
 def hello_world():  # put application's code here
     return 'Hello World!'
