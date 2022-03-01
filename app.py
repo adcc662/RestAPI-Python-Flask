@@ -27,8 +27,9 @@ class Municipality(db.Model):
     name = db.Column(db.Text)
     state_id = db.Column(db.Integer, db.ForeignKey('state.id'), nullable=False)
 
-    def __init__(self, name):
+    def __init__(self, name, state_id):
         self.name = name
+        self.state_id = state_id
 
 
 class Colony(db.Model):
@@ -39,11 +40,12 @@ class Colony(db.Model):
     type_zone = db.Column(db.Text)
     state_id = db.Column(db.Integer, db.ForeignKey('state.id'), nullable=False)
 
-    def __init__(self, postalcode, name_colony, type_colony, type_zone):
+    def __init__(self, postalcode, name_colony, type_colony, type_zone, state_id):
         self.postalcode = postalcode
         self.name_colony = name_colony
         self.type_colony = type_colony
         self.type_zone = type_zone
+        self.state_id = state_id
 
 
 db.create_all()
@@ -56,12 +58,12 @@ class StateSchema(ma.Schema):
 
 class MunicipalitySchema(ma.Schema):
     class Meta:
-        fields = ("id", "name")
+        fields = ("id", "name", "state_id")
 
 
 class ColonySchema(ma.Schema):
     class Meta:
-        fields = ("id", "postalcode", "name_colony", "type_colony", "type_zone")
+        fields = ("id", "postalcode", "name_colony", "type_colony", "type_zone", "state_id")
 
 
 state_schema = StateSchema()
@@ -99,10 +101,18 @@ def get_states():
 @app.route('/municipalities', methods=["POST"])
 def create_municipalities():
     name = request.json['name']
-    new_municipality = Municipality(name)
+    state_id = request.json['state_id']
+    new_municipality = Municipality(name, state_id)
     db.session.add(new_municipality)
     db.session.commit()
     return municipality_schema.jsonify(new_municipality)
+
+
+@app.route('/municipalities', methods=["GET"])
+def get_municipalities():
+    all_municipalities = Municipality.query.all()
+    result = municipalities_schema.dump(all_municipalities)
+    return jsonify(result)
 
 
 if __name__ == '__main__':
