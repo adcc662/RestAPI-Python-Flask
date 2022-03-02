@@ -131,7 +131,13 @@ def create_colonies():
 
 @app.route('/colonies', methods=["GET"])
 def get_colonies():
-    all_colonies = Colony.query.all()
+    limit = request.args.get('limit')
+    offset = request.args.get('offset')
+    if limit is None:
+        limit = 10
+    if offset is None:
+        offset = 0
+    all_colonies = Colony.query.limit(limit).offset(offset)
     result = colonies_schema.dump(all_colonies)
     return jsonify(result)
 
