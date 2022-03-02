@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 ma = Marshmallow(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root@localhost/sepomex_beta'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:secret@db/sepomex_beta'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 ma = Marshmallow(app)

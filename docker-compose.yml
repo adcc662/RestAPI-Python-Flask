@@ -1,0 +1,23 @@
+version: "2"
+services:
+  db:
+      container_name: mysql
+      image: mysql:5.7
+      restart: on-failure
+      environment:
+          - MYSQL_DATABASE=sepomex_beta
+          - MYSQL_ROOT_PASSWORD=secret
+          - MYSQL_USER=user
+          - MYSQL_PASSWORD=secret
+      ports:
+          - "33060:3306"
+      volumes:
+          - "./data/db/mysqd:/var/lib/mysql"
+  app:
+    container_name: app_sepomex
+    build: .
+    links:
+      - db
+    ports:
+      - "5000:5000"
+    restart: on-failure
