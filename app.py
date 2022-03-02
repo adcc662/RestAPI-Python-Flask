@@ -115,5 +115,25 @@ def get_municipalities():
     return jsonify(result)
 
 
+@app.route('/colonies', methods=["POST"])
+def create_colonies():
+    postalcode = request.json['postalcode']
+    name_colony = request.json['name_colony']
+    type_colony = request.json['type_colony']
+    type_zone = request.json['type_zone']
+    state_id = request.json['state_id']
+    new_colony = Colony(postalcode, name_colony, type_colony, type_zone, state_id)
+    db.session.add(new_colony)
+    db.session.commit()
+    return colony_schema.jsonify(new_colony)
+
+
+@app.route('/colonies', methods=["GET"])
+def get_colonies():
+    all_colonies = Colony.query.all()
+    result = colonies_schema.dump(all_colonies)
+    return jsonify(result)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
