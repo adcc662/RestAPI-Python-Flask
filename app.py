@@ -136,5 +136,12 @@ def get_colonies():
     return jsonify(result)
 
 
+@app.route('/colonies/<cp>', methods=["GET"])
+def get_colonies_by_cp(cp):
+    colonies = Colony.query.filter_by(postalcode=cp).all()
+    result = colonies_schema.dump(colonies)
+    return jsonify(result)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
