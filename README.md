@@ -34,3 +34,4 @@ Metodo GET
 ```
 
 En la ruta ```127.0.0.1:5000/colonies?limit=10&offset=0```, limit es el número de colonias que devuelve y offset a partir de cual colonia devolverá los datos.
+También se pueden crear nuevos estados, municipios y colonias.
