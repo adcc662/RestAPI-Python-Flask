@@ -17,7 +17,8 @@ class State(db.Model):
     municipalities = db.relationship('Municipality', backref='state', lazy=True)
     colonies = db.relationship('Colony', backref='state', lazy=True)
 
-    def __init__(self, name_state, capital):
+    def __init__(self, id, name_state, capital):
+        self.id = id
         self.name_state = name_state
         self.capital = capital
 
