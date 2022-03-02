@@ -33,5 +33,9 @@ for r in range(1, hojas.nrows):
     values_colonias = (postalcode, name_colony, type_colony, type_zone)
     cursor.execute(query_colonias, values_colonias)
 
+cursor.close()
+database.commit()
+database.close()
+
 
 
